@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+    web:
+        build:
+            context: ../
+            dockerfile: Dockerfile.web
+        image: web
+        ports:
+            - 8080:80
+        volumes:
+            - "/home/vagrant/web:/var/www/html:ro"
+        networks:
+            - bgapp-net
+        depends_on:
+            - db
+    db:
+        build:
+            context: ../
+            dockerfile: Dockerfile.db
+        image: db
+        networks:
+            - bgapp-net
+        environment:
+            MYSQL_ROOT_PASSWORD: "12345"
+networks:
+    bgapp-net:
+      
